@@ -1,4 +1,5 @@
 const net = require('net');
+const parser = require('./parser.js');
 
 class Request{
     //method, url = host + port + path
@@ -227,11 +228,11 @@ class TrunkedBodyParser{
 void async function(){
     let request = new Request({
             method: "POST",
-            host: "localhost",
+            host: "127.0.0.1",
             port: 8087,
             path: '/',
             headers: {
-            ["X-Foo2"]:"customer2"
+                ["X-Foo2"]:"customed"
             },
             body: {
                 name: 'luke'
@@ -240,7 +241,10 @@ void async function(){
     let response = await request.send();
 
     let dom = parser.parseHTML(response.body);
-    console.log(response); 
+
+    console.log(JSON.stringify(dom,null, "   "));
+    console.log("");
+    
 }();
 
 
