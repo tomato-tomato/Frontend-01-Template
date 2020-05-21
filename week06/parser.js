@@ -64,8 +64,8 @@ function compare(sp1, sp2){
 
 function computeCSS(element) {
     let elements = stack.slice().reverse();
-    if(!element.computeStyle){
-        element.computeStyle = {};
+    if(!element.computedStyle){
+        element.computedStyle = {};
     }
 
     for(let rule of rules) {
