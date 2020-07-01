@@ -1,0 +1,57 @@
+<style>
+	#container{
+		font-size: 1.3rem;
+		font-weight: bold;
+	}
+	.keywords{
+		color: blue;
+	}
+	.punctuator{
+		color: blueviolet;
+	}
+	.identifier{
+		color: skyblue;
+	}
+	.ES6{
+		color: red;
+	}
+</style>
+<pre id="container">
+	
+</pre>
+<script>
+	let source = `
+		function sleep(t){
+			return new Promise((resolve) => {
+				setTimeout(resolve, t);
+			});
+		}
+	`;
+
+	let regexp = /(function|new|return)|([ \t\n\r]+)|([a-zA-Z][a-zA-Z0-9]*)|([\(\)\{\}\,\;])|(=>)/g;
+	let dictionary = ['keywords','whitespace','identifier','punctuator','ES6'];
+
+	let token = null;
+	let lastIndex = 0;
+
+	const container = document.getElementById("container");
+	do{
+		lastIndex = regexp.lastIndex;
+		token = regexp.exec(source);
+		if(!token) break;
+		let span = document.createElement("span");
+		span.textContent = token[0];
+		console.log(token);
+		// console.log(regexp.lastIndex - lastIndex);
+		for (let i = 1; i < 6; i++) {
+			// console.log(i,token[i]);
+			if(token[i]){
+				// console.log(dictionary[i-1], token[0]);
+				span.classList.add(dictionary[i-1]);
+			}		
+		}
+		container.appendChild(span);
+		//lastIndex 为上一次匹配文本之后的第一个字符位置
+		//regexp.lastIndex 为匹配文本的最后一个字符的下一个位置
+	}while(token[0].length === regexp.lastIndex - lastIndex);
+</script>
