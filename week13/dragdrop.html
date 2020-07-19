@@ -1,0 +1,54 @@
+<div id="container">在《精灵宝可梦》还被称作《宠物小精灵》或《神奇宝贝》的年代，很多人并不记得这首主题曲的名字，只记得那句已经刻在DNA里的开场白：ポケモン，ゲットだぜーッ！（宝可梦，得到它了！）以及跟随着节拍不断振奋起来的内心。作为《精灵宝可梦》系列动画的第一首OP，该曲在问世伊始便取得了相当辉煌的成绩，实体销量突破了百万大关，为整部作品拿下了一个漂亮的“开门红”，演唱者松本梨香也由此登上“神坛”。提到松本梨香，她的演艺生涯可谓一波三折。原本从事舞台剧的她因身体原因不得不放弃这份工作，在友人的建议下转战声优行业。自成为声优开始松本便以元气的少年音见长，不过历经数年都没有等来担当主役的机会。直到与《精灵宝可梦》相遇，松本成功入选为小智的声优，且有幸为该作长期演唱主题曲，她的职业道路从此才雾散花开。如今，松本的名字早已同《精灵宝可梦》紧紧地联系在了一起，而《目标是宝可梦大师》无疑是其最得心应手的演唱曲目之一。她本人也希望有更多的人通过这首歌去探寻《精灵宝可梦》的世界，一起见证小智那长达二十年的夺冠历程。在《精灵宝可梦》还被称作《宠物小精灵》或《神奇宝贝》的年代，很多人并不记得这首主题曲的名字，只记得那句已经刻在DNA里的开场白：ポケモン，ゲットだぜーッ！（宝可梦，得到它了！）以及跟随着节拍不断振奋起来的内心。作为《精灵宝可梦》系列动画的第一首OP，该曲在问世伊始便取得了相当辉煌的成绩，实体销量突破了百万大关，为整部作品拿下了一个漂亮的“开门红”，演唱者松本梨香也由此登上“神坛”。</div>
+<div id="drag" style="display: inline-block; width: 40px;height: 40px; background-color: gold;"></div>
+<script>
+    let drag = document.getElementById('drag');
+    let baseX = 0, baseY = 0;
+    drag.addEventListener('mousedown', event => {
+        console.log(11)
+        let {clientX: sx, clientY: sy} = event;
+        let move = event => { 
+            let {clientX: x, clientY: y} = event;
+            let range = nearest(x, y)
+            range.insertNode(drag)
+            // console.log(0)
+            // let {clientX: x, clientY: y} = event;
+            // drag.style.transform = `translate(${baseX + x - sx }px, ${baseY + y - sy}px)`
+        };
+        let up = event => {
+            baseX = baseX + event.clientX - sx;
+            baseY = baseY + event.clientY - sy;
+            document.removeEventListener('mousemove', move);
+            document.removeEventListener('mouseup', up);
+        };
+        document.addEventListener('mousemove', move);
+        document.addEventListener('mouseup', up);
+    })
+    let ranges = [];
+
+    let container = document.getElementById('container');
+    for(let i = 0; i < container.childNodes[0].textContent.length; i++){
+        let range = document.createRange();
+
+        range.setStart(container.childNodes[0], i);
+        range.setEnd(container.childNodes[0], i);
+        console.log(range.getBoundingClientRect());
+        ranges.push(range);
+    }
+
+    function nearest(x0, y0){
+        let nearestRange = null;
+        let distance = Infinity;
+        for(let range of ranges){
+            let {x, y} = range.getBoundingClientRect();
+            let d = (x0 - x) ** 2 + (y0 - y) ** 2;
+            if(d < distance){
+                nearestRange = range;
+                distance = d;
+            }
+        }
+        return nearestRange
+    }
+    document.addEventListener('selectstart', event => {
+        event.preventDefault();
+    })
+</script>
