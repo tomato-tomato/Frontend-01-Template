@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './main.js',
+    entry: './main_carousel.js',
     module: {
         rules: [
             {
@@ -10,7 +10,8 @@ module.exports = {
                         presets: ['@babel/preset-env'],
                         plugins: [
                             [
-                                "@babel/plugin-transform-react-jsx",{"pragma":"create"}
+                                "@babel/plugin-transform-react-jsx",
+                                {"pragma":"createElement"}
                             ]
                         ]
                     }
@@ -21,5 +22,8 @@ module.exports = {
     mode: "development",
     optimization: {
         minimize: false
+    },
+    devServer: {
+        port: 9000
     }
 };
